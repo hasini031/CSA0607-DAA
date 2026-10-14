@@ -1,0 +1,162 @@
+import math
+import time
+
+SERVER_RATE = 10**8
+TIME_LIMIT = 600
+
+def m1_duplicate_detector(products):
+    duplicates = []
+    comparisons = 0
+    for i in range(len(products) - 1):
+        for j in range(i + 1, len(products)):
+            comparisons += 1
+            if products[i][0] == products[j][0] and products[i][1] == products[j][1]:
+                duplicates.append(j)
+    return duplicates, comparisons
+
+def m1_count(n):
+    return n * (n - 1) // 2
+
+def m2_rate_limiter(n):
+    i = 1
+    audits = 0
+    while i < n:
+        audits += i
+        i *= 2
+    return audits
+
+def m2_count(n):
+    if n <= 1:
+        return 0
+    return 2**math.ceil(math.log2(n)) - 1
+
+def linear_search(items, target):
+    comparisons = 0
+    for item in items:
+        comparisons += 1
+        if item == target:
+            return True, comparisons
+    return False, comparisons
+
+def binary_search(items, target):
+    left = 0
+    right = len(items) - 1
+    comparisons = 0
+    while left <= right:
+        mid = (left + right) // 2
+        comparisons += 1
+        if items[mid] == target:
+            return True, comparisons
+        elif items[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return False, comparisons
+
+def m4_current_power2(n):
+    return 2 * n**2 - n
+
+def m4_redesigned_power2(n):
+    return int(n * math.log2(n) + n)
+
+def m5_power2(n):
+    k = int(math.log2(n))
+    return n * k * (k + 1) // 2 + n
+
+def report_generator_cost(n):
+    return 3 * n**2 + 10 * n * math.log2(n) + 50
+
+def server_time(operations):
+    return operations / SERVER_RATE
+
+def format_time(seconds):
+    if seconds < 1:
+        return f"{seconds:.6f} seconds"
+    if seconds < 60:
+        return f"{seconds:.2f} seconds"
+    return f"{seconds / 60:.2f} minutes"
+
+def show_result(name, operations, complexity, space):
+    seconds = server_time(operations)
+    status = "EXCEEDS 10 MINUTES" if seconds > TIME_LIMIT else "WITHIN 10 MINUTES"
+    print("\n" + name)
+    print("Operation count:", f"{operations:,.2f}")
+    print("Estimated server time:", format_time(seconds))
+    print("Time complexity:", complexity)
+    print("Space complexity:", space)
+    print("10-minute check:", status)
+
+print("=" * 65)
+print("CSA06 CO1: SHOPSPHERE SCALABILITY AUDIT")
+print("=" * 65)
+
+products = [
+    ("Phone", "SellerA"),
+    ("Book", "SellerB"),
+    ("Phone", "SellerA"),
+    ("Laptop", "SellerC")
+]
+start = time.perf_counter()
+duplicates, comparisons = m1_duplicate_detector(products)
+elapsed = time.perf_counter() - start
+print("\nM1: DUPLICATE DETECTOR")
+print("Sample comparisons:", comparisons)
+print("Duplicate positions:", duplicates)
+print("Measured Python time:", f"{elapsed:.8f} seconds")
+print("Time: Theta(n^2)")
+print("Auxiliary space: O(1), excluding returned duplicates")
+
+print("\nM2: RATE LIMITER VERIFICATION")
+print("Actual audits for n = 1024:", m2_rate_limiter(1024))
+print("Formula audits for n = 1024:", m2_count(1024))
+print("Time: Theta(n)")
+print("Auxiliary space: Theta(1)")
+
+items = [3, 8, 12, 17, 25, 31, 44, 59, 63]
+print("\nM3: PRODUCT SEARCH")
+print("Linear search for 31:", linear_search(items, 31))
+print("Binary search for 31:", binary_search(items, 31))
+print("Linear search time: O(n), space: O(1)")
+print("Binary search time: O(log n), space: O(1)")
+
+print("\nS1: SEARCH CASE ANALYSIS")
+n_search = 1_000_000
+p = 0.5
+best = 1
+average_successful = (n_search + 1) / 2
+worst = n_search
+average_expected = p * average_successful + (1 - p) * n_search
+print("Best-case comparisons:", best)
+print("Average successful comparisons:", average_successful)
+print("Worst-case comparisons:", worst)
+print("Expected comparisons when p = 0.5:", average_expected)
+
+n = 1_000_000
+logn = math.log2(n)
+print("\n" + "=" * 65)
+print("SCALABILITY FOR n = 1,000,000")
+print("=" * 65)
+print("Server rate: 100,000,000 operations/second")
+print("10-minute budget: 60,000,000,000 operations")
+
+show_result("M1: Duplicate detector", m1_count(n), "Theta(n^2)", "O(1) auxiliary, excluding duplicate output")
+show_result("M2: API rate limiter", m2_count(n), "Theta(n)", "Theta(1)")
+
+binary_worst = math.floor(math.log2(n)) + 1
+show_result("M3 S2: Binary search", binary_worst, "Theta(log n)", "Theta(1)")
+
+m4_current_estimate = 2 * n**2 - n
+m4_redesigned_estimate = n * logn + n
+m5_estimate = n * logn**2
+
+show_result("M4: Current design (recurrence-based estimate)", m4_current_estimate, "Theta(n^2)", "Theta(log n) recursion stack")
+show_result("M4: Redesigned (recurrence-based estimate)", m4_redesigned_estimate, "Theta(n log n)", "Theta(log n) recursion stack")
+show_result("M5: Analytics (asymptotic estimate)", m5_estimate, "Theta(n log^2 n)", "Theta(log n) recursion stack")
+
+print("\nREPORT GENERATOR")
+report_ops = report_generator_cost(n)
+print("f(n) = 3n^2 + 10n log2(n) + 50")
+print("Operations:", f"{report_ops:,.0f}")
+print("Estimated server time:", format_time(server_time(report_ops)))
+print("Time complexity: Theta(n^2)")
+print("Auxiliary space: Theta(1)")
