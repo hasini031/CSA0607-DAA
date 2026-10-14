@@ -1,0 +1,138 @@
+TASK 3 – DERIVE THE TIME-COMPLEXITY FUNCTION MATHEMATICALLY
+
+1. Algorithm 1: Linear Search
+
+Input Size:
+Let n be the total number of student records in the database.
+
+Basic Operation:
+Comparison of the target registration number with a registration number in the current record.
+
+Mathematical Derivation:
+
+In the best case, the target is the first record. Therefore, only one comparison is required.
+
+C_best(n) = 1
+
+In the worst case, the target is the last record or is absent. Every record must be checked.
+
+C_worst(n) = n
+
+For a successful search, assuming the target is equally likely to be at any position, the average number of comparisons is:
+
+C_avg(n) = (1 + 2 + 3 + ... + n) / n
+
+Using the arithmetic-series formula:
+
+C_avg(n) = [n(n + 1) / 2] / n
+
+C_avg(n) = (n + 1) / 2
+
+Therefore, the average and worst-case time complexity is Θ(n).
+
+Preprocessing Cost:
+No preprocessing is required.
+
+Overall Cost:
+The total cost is Θ(n) in the worst case because each record may need to be examined.
+
+2. Algorithm 2: Recursive Binary Search
+
+Input Size:
+Let n be the number of records in the sorted database.
+
+Basic Operation:
+Comparison of the target registration number with the middle record.
+
+Mathematical Derivation:
+
+At every recursive call, binary search reduces the search range to approximately half its previous size.
+
+The recurrence relation is:
+
+T(n) = T(n/2) + c
+
+where c is a constant representing the work performed in one call.
+
+The recurrence continues until the search range contains one record.
+
+After k divisions:
+
+n / 2^k = 1
+
+Therefore:
+
+n = 2^k
+
+Taking logarithms to base 2:
+
+k = log₂(n)
+
+The number of recursive calls is proportional to log₂(n).
+
+Therefore:
+
+T(n) = Θ(log n)
+
+Preprocessing Cost:
+If the records are initially unsorted, sorting them using an efficient comparison-based sorting algorithm costs Θ(n log n).
+
+Overall Cost:
+Sorting once and then performing one search costs Θ(n log n) + Θ(log n), which simplifies to Θ(n log n).
+
+If the sorted database is already maintained, an individual search costs Θ(log n).
+
+3. Algorithm 3: Hash Table Search
+
+Input Size:
+Let n be the number of student records stored in the hash table.
+
+Basic Operation:
+Hash-table lookup using the target registration number.
+
+Mathematical Derivation:
+
+Under suitable hashing assumptions, a lookup requires an approximately constant number of operations on average.
+
+Let c represent the expected constant lookup cost.
+
+T_avg(n) = c
+
+Therefore:
+
+T_avg(n) = Θ(1)
+
+In the worst case, multiple keys may collide and be stored in the same bucket or chain. If all keys collide, the search may examine up to n records.
+
+T_worst(n) = Θ(n)
+
+Preprocessing Cost:
+Building a hash table from n records requires expected Θ(n) time.
+
+Overall Cost:
+Building the table and performing one lookup costs expected Θ(n) + Θ(1), which simplifies to expected Θ(n).
+
+If the table is already built, each lookup takes expected Θ(1) time.
+
+Space Complexity:
+The hash table requires Θ(n) additional space to store the registration numbers and their associated records.
+
+4. Comparison of Mathematical Complexity
+
+Linear Search:
+Best case: Θ(1)
+Average case: Θ(n)
+Worst case: Θ(n)
+
+Recursive Binary Search:
+Best case: Θ(1)
+Average case: Θ(log n)
+Worst case: Θ(log n)
+
+Hash Table Search:
+Expected average lookup: Θ(1)
+Worst-case lookup: Θ(n)
+
+5. Conclusion
+
+Linear search is easy to implement but becomes slower as the number of records increases. Recursive binary search provides efficient searching when the records are sorted. Hash table search provides expected constant-time lookup but requires additional memory and preprocessing. The overall choice depends on search frequency, preprocessing costs, memory requirements, and experimental results.
