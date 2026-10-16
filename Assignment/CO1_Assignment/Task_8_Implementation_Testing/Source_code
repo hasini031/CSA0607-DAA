@@ -1,1 +1,112 @@
+```python
+# 1. Linear Search
+def linear_search(records, target):
+    comparisons = 0
 
+    for i, value in enumerate(records):
+        comparisons += 1
+        if value == target:
+            return i, comparisons
+
+    return -1, comparisons
+
+
+# 2. Recursive Binary Search
+def recursive_binary_search(records, target, low=0, high=None):
+    if high is None:
+        high = len(records) - 1
+
+    if low > high:
+        return -1, 0
+
+    mid = (low + high) // 2
+    comparisons = 1
+
+    if records[mid] == target:
+        return mid, comparisons
+
+    if target < records[mid]:
+        index, count = recursive_binary_search(
+            records, target, low, mid - 1
+        )
+    else:
+        index, count = recursive_binary_search(
+            records, target, mid + 1, high
+        )
+
+    return index, comparisons + count
+
+
+# 3. Hash Table Search
+def build_hash_table(records):
+    return {value: value for value in records}
+
+
+def hash_search(table, target):
+    return table.get(target, None)
+
+
+# Test all algorithms
+def benchmark():
+    sizes = [1_000, 10_000, 100_000, 1_000_000]
+
+    print("=" * 85)
+    print("STUDENT REGISTRATION NUMBER SEARCH - PERFORMANCE TEST")
+    print("=" * 85)
+
+    print(
+        f"{'Records':>10} | {'Linear (s)':>12} | "
+        f"{'Binary (s)':>12} | {'Hash Build (s)':>14} | "
+        f"{'Hash Lookup (s)':>15}"
+    )
+    print("-" * 85)
+
+    for n in sizes:
+        # Generate unique, sorted registration numbers
+        records = list(range(10_000_000, 10_000_000 + n))
+        target = records[-1]
+
+        # Linear Search
+        start = time.perf_counter()
+        linear_result = linear_search(records, target)
+        linear_time = time.perf_counter() - start
+
+        # Recursive Binary Search
+        start = time.perf_counter()
+        binary_result = recursive_binary_search(records, target)
+        binary_time = time.perf_counter() - start
+
+        # Build Hash Table
+        start = time.perf_counter()
+        table = build_hash_table(records)
+        build_time = time.perf_counter() - start
+
+        # Hash Table Lookup
+        start = time.perf_counter()
+        hash_result = hash_search(table, target)
+        lookup_time = time.perf_counter() - start
+
+        # Verify correctness
+        assert linear_result[0] == n - 1
+        assert binary_result[0] == n - 1
+        assert hash_result == target
+
+        print(
+            f"{n:>10,} | {linear_time:>12.8f} | "
+            f"{binary_time:>12.8f} | {build_time:>14.8f} | "
+            f"{lookup_time:>15.8f}"
+        )
+
+        del table
+
+    print("-" * 85)
+    print("All correctness tests passed.")
+    print("Linear Search: O(n) worst-case time, O(1) auxiliary space.")
+    print("Recursive Binary Search: O(log n) time, O(log n) stack space.")
+    print("Hash Table Search: Expected O(1) lookup, O(n) additional space.")
+    print("Note: Hash-table construction takes expected O(n) time.")
+
+
+if __name__ == "__main__":
+    benchmark()
+```
