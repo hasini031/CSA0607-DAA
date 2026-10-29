@@ -1,0 +1,78 @@
+# 3. Log Signature Matching — Corrected and Optimized Pseudocode
+
+## A. Corrected Algorithm: Brute-Force String Matching
+
+**Input:** Log string and signature pattern.
+
+**Output:** All starting positions where the pattern occurs.
+
+```text
+ALGORITHM CORRECTED_FIND_SIGNATURE(log, pattern)
+
+    IF pattern is empty
+        RETURN empty list
+    END IF
+
+    positions ← empty list
+
+    FOR i ← 0 TO LENGTH(log) - LENGTH(pattern)
+        IF log[i : i + LENGTH(pattern)] = pattern
+            ADD i TO positions
+        END IF
+    END FOR
+
+    RETURN positions
+
+END ALGORITHM
+```
+
+## B. Optimized Algorithm: Knuth-Morris-Pratt (KMP)
+
+```text
+ALGORITHM OPTIMIZED_FIND_SIGNATURE(log, pattern)
+
+    IF pattern is empty
+        RETURN empty list
+    END IF
+
+    BUILD the LPS array for pattern
+
+    positions ← empty list
+    i ← 0
+    j ← 0
+
+    WHILE i < LENGTH(log)
+
+        IF log[i] = pattern[j]
+            i ← i + 1
+            j ← j + 1
+        END IF
+
+        IF j = LENGTH(pattern)
+            ADD (i - j) TO positions
+            j ← LPS[j - 1]
+
+        ELSE IF i < LENGTH(log) AND log[i] ≠ pattern[j]
+
+            IF j > 0
+                j ← LPS[j - 1]
+            ELSE
+                i ← i + 1
+            END IF
+
+        END IF
+
+    END WHILE
+
+    RETURN positions
+
+END ALGORITHM
+```
+
+**Time Complexity:**
+- Corrected brute-force matching: O(nm) worst case.
+- Optimized KMP matching: O(n + m).
+
+Here, n is the log length and m is the pattern length. LPS means Longest Proper Prefix which is also a Suffix.
+
+**Purpose:** Find all occurrences of a suspicious signature in a log, including occurrences at the final possible position and overlapping matches.
