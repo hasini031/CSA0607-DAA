@@ -1,0 +1,44 @@
+# 1. Alert Sorting — Corrected and Optimized Pseudocode
+
+## A. Corrected Algorithm: Insertion Sort
+
+**Input:** List of alerts containing alert ID and severity.
+
+**Output:** Alerts sorted by descending severity.
+
+```text
+ALGORITHM CORRECTED_SORT_ALERTS(alerts)
+
+    FOR i ← 1 TO LENGTH(alerts) - 1
+        current ← alerts[i]
+        j ← i - 1
+
+        WHILE j >= 0 AND alerts[j].severity < current.severity
+            alerts[j + 1] ← alerts[j]
+            j ← j - 1
+        END WHILE
+
+        alerts[j + 1] ← current
+    END FOR
+
+    RETURN alerts
+
+END ALGORITHM
+```
+
+## B. Optimized Algorithm: Built-in Sorting
+
+```text
+ALGORITHM OPTIMIZED_SORT_ALERTS(alerts)
+
+    SORT alerts by severity in descending order
+    RETURN sorted alerts
+
+END ALGORITHM
+```
+
+**Time Complexity:**
+- Corrected insertion sort: Best case O(n), worst case O(n²).
+- Optimized built-in sorting: Typically O(n log n).
+
+**Purpose:** Correctly arrange security alerts from highest severity to lowest severity without losing or duplicating alert records.
