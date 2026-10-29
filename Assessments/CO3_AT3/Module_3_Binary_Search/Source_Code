@@ -1,1 +1,54 @@
 
+# CO3 DAA - Module 3: Binary Search
+# Order Lookup System
+
+def binary_search_first(orders, target):
+    low = 0
+    high = len(orders) - 1
+    result = -1
+    comparisons = 0
+
+    while low <= high:
+        mid = (low + high) // 2
+        comparisons += 1
+
+        if orders[mid][0] == target:
+            result = mid
+            high = mid - 1
+
+        elif orders[mid][0] < target:
+            low = mid + 1
+
+        else:
+            high = mid - 1
+
+    return result, comparisons
+
+
+# Main program
+if __name__ == "__main__":
+    # Orders sorted by timestamp using Module 1
+    orders = [
+        (101, "O4"),
+        (102, "O2"),
+        (102, "O5"),
+        (103, "O6"),
+        (105, "O1"),
+        (105, "O3")
+    ]
+
+    target = 102
+
+    print("Sorted orders:", orders)
+    print("Searching for timestamp:", target)
+
+    index, comparisons = binary_search_first(orders, target)
+
+    if index != -1:
+        print("First matching order:", orders[index])
+        print("Index:", index)
+    else:
+        print("Order timestamp not found.")
+
+    print("Comparisons:", comparisons)
+
