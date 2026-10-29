@@ -1,0 +1,13 @@
+
+test_blocklist (test_harness.TestSentinelOps.test_blocklist) ... ok
+test_closest_pair (test_harness.TestSentinelOps.test_closest_pair) ... ok
+test_empty_pattern (test_harness.TestSentinelOps.test_empty_pattern) ... ok
+test_overlapping_signatures (test_harness.TestSentinelOps.test_overlapping_signatures) ... ok
+test_signature (test_harness.TestSentinelOps.test_signature) ... ok
+test_sort (test_harness.TestSentinelOps.test_sort) ... ok
+test_too_few_events (test_harness.TestSentinelOps.test_too_few_events) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
