@@ -1,1 +1,115 @@
 
+# Q6: Exhaustive Search - Humanitarian Package Selection
+
+import random
+import time
+
+
+def exhaustive_search(packages, capacity):
+    n = len(packages)
+
+    best_value = 0
+    best_combination = []
+    best_weight = 0
+    subsets_examined = 0
+
+    # Examine every possible subset, including the empty subset.
+    for mask in range(1 << n):
+        total_weight = 0
+        total_value = 0
+        selected = []
+
+        for i in range(n):
+            if mask & (1 << i):
+                package = packages[i]
+
+                total_weight += package["weight"]
+                total_value += package["value"]
+                selected.append(package["id"])
+
+        subsets_examined += 1
+
+        if total_weight <= capacity and total_value > best_value:
+            best_value = total_value
+            best_weight = total_weight
+            best_combination = selected
+
+    return (
+        best_combination,
+        best_weight,
+        best_value,
+        subsets_examined
+    )
+
+
+print("Q6: EXHAUSTIVE PACKAGE SELECTION")
+print("=" * 65)
+
+# Experiment 1: Small example for independent verification
+packages = [
+    {"id": "P1", "weight": 2, "value": 12},
+    {"id": "P2", "weight": 1, "value": 10},
+    {"id": "P3", "weight": 3, "value": 20},
+    {"id": "P4", "weight": 2, "value": 15}
+]
+
+capacity = 5
+
+result = exhaustive_search(packages, capacity)
+combination, weight, value, examined = result
+
+print("\n1. Small example")
+print("Payload capacity:", capacity)
+print("Packages:", packages)
+print("Best combination:", combination)
+print("Total weight:", weight)
+print("Maximum value:", value)
+print("Subsets examined:", examined)
+
+# Independent verification:
+# P1 + P3 = weight 5, value 32
+# P2 + P3 = weight 4, value 30
+# P1 + P2 + P4 = weight 5, value 37
+assert set(combination) == {"P1", "P2", "P4"}
+assert weight == 5
+assert value == 37
+assert examined == 2 ** len(packages)
+
+print("Correctness check passed: optimal value is 37.")
+
+
+# Experiment 2: Increasing number of packages
+print("\n\n2. Growth experiment")
+print("-" * 65)
+print(f"{'Packages':<12}{'Possible subsets':<20}"
+      f"{'Examined':<15}{'Time (seconds)':<18}")
+
+random.seed(42)
+
+for n in [10, 15, 20]:
+    test_packages = [
+        {
+            "id": f"P{i + 1}",
+            "weight": random.randint(1, 15),
+            "value": random.randint(5, 50)
+        }
+        for i in range(n)
+    ]
+
+    capacity = n * 5
+
+    start = time.perf_counter()
+    result = exhaustive_search(test_packages, capacity)
+    elapsed = time.perf_counter() - start
+
+    _, total_weight, total_value, examined = result
+
+    expected = 2 ** n
+    assert examined == expected
+    assert total_weight <= capacity
+
+    print(f"{n:<12}{expected:<20}{examined:<15}"
+          f"{elapsed:.6f}")
+
+print("\nAll experiments completed.")
+
