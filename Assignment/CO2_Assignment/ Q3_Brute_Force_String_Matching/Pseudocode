@@ -1,0 +1,36 @@
+
+ALGORITHM: Brute-Force String Matching
+
+INPUT:
+    Text T of length n
+    Pattern P of length m
+
+OUTPUT:
+    Starting positions where P occurs in T
+    Total character comparisons
+
+1. Set comparisons = 0.
+2. Set matches = an empty list.
+
+3. FOR i = 0 TO n - m:
+       Set j = 0.
+
+       WHILE j < m:
+           Increment comparisons.
+
+           IF T[i + j] is not equal to P[j]:
+               BREAK the WHILE loop.
+           END IF
+
+           Increment j.
+       END WHILE
+
+       IF j equals m:
+           Add i to matches.
+       END IF
+   END FOR
+
+4. Display matches and comparisons.
+5. Return matches and comparisons.
+
+END ALGORITHM
