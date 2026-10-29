@@ -1,1 +1,49 @@
 
+ALGORITHM: Brute-Force Convex Hull
+
+INPUT:
+    A set P of n two-dimensional points
+
+OUTPUT:
+    The points forming the convex hull boundary
+
+1. Set hull_edges = an empty list.
+
+2. FOR every pair of distinct points A and B:
+       Set left_side = FALSE.
+       Set right_side = FALSE.
+       Set collinear_points = an empty list.
+
+       FOR every point C other than A and B:
+           Calculate cross product:
+
+           cross = (B.x - A.x) * (C.y - A.y)
+                   - (B.y - A.y) * (C.x - A.x)
+
+           IF cross > 0:
+               Set left_side = TRUE.
+           ELSE IF cross < 0:
+               Set right_side = TRUE.
+           ELSE:
+               Add C to collinear_points.
+           END IF
+       END FOR
+
+       IF points exist on both sides:
+           Reject pair A, B as a hull edge.
+       ELSE:
+           Check whether any collinear point lies
+           between A and B.
+           If one does, reject this pair.
+           Otherwise, accept A, B as a hull edge.
+       END IF
+   END FOR
+
+3. Collect all endpoints of accepted hull edges.
+
+4. Arrange the hull vertices in boundary order.
+
+5. Display the hull vertices and boundary edges.
+
+END ALGORITHM
+
