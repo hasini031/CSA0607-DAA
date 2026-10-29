@@ -1,1 +1,36 @@
+# Pseudocode – Stable Merge Sort
 
+**Algorithm:** Merge Sort
+
+**Input:** A list of orders containing timestamp and order ID.
+
+**Output:** Orders sorted by timestamp while preserving the original order of equal timestamps.
+
+### Algorithm: MERGE_SORT(A)
+
+1. If the length of A is less than or equal to 1, return A.
+2. Divide A into two halves: Left and Right.
+3. Recursively apply MERGE_SORT to Left.
+4. Recursively apply MERGE_SORT to Right.
+5. Merge the two sorted halves:
+   - Compare the timestamps of the first remaining orders.
+   - Select the order with the smaller timestamp.
+   - If timestamps are equal, select the order from the Left half first.
+   - Append the selected order to the result.
+6. Append any remaining orders.
+7. Return the merged list.
+
+### Algorithm: MERGE(Left, Right)
+
+1. Initialize an empty result list.
+2. While both lists contain unprocessed orders:
+   - If Left's timestamp is less than or equal to Right's timestamp, append the first order from Left.
+   - Otherwise, append the first order from Right.
+3. Append all remaining orders from either list.
+4. Return the result.
+
+**Time Complexity:** O(n log n)
+
+**Auxiliary Space:** O(n)
+
+**Stability:** Stable, because equal timestamps from the left half are selected first.
