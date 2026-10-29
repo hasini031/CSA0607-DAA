@@ -1,1 +1,39 @@
 
+ALGORITHM: Exhaustive Package Selection
+
+INPUT:
+    A list of packages, each with an ID, weight, and value
+    Maximum payload capacity W
+
+OUTPUT:
+    The best feasible package combination
+    Maximum total value
+
+1. Set best_value = 0.
+2. Set best_combination = empty.
+3. Let n be the number of packages.
+4. Generate all 2^n possible subsets of packages.
+
+5. FOR each subset:
+       Set total_weight = 0.
+       Set total_value = 0.
+
+       FOR each package in the subset:
+           Add its weight to total_weight.
+           Add its value to total_value.
+       END FOR
+
+       IF total_weight <= W:
+           IF total_value > best_value:
+               Set best_value = total_value.
+               Set best_combination = subset.
+           END IF
+       END IF
+   END FOR
+
+6. Display best_combination.
+7. Display its total weight and total value.
+8. Display the number of subsets examined.
+
+END ALGORITHM
+
