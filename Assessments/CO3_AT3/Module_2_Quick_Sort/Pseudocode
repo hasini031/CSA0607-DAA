@@ -1,1 +1,42 @@
+ALGORITHM QUICK_SORT(A, low, high)
 
+    IF low < high THEN
+        pivotIndex ← MEDIAN_OF_THREE(A, low, high)
+        SWAP A[pivotIndex] WITH A[high]
+
+        p ← PARTITION(A, low, high)
+
+        QUICK_SORT(A, low, p - 1)
+        QUICK_SORT(A, p + 1, high)
+    END IF
+
+END ALGORITHM
+
+
+ALGORITHM PARTITION(A, low, high)
+
+    pivot ← A[high]
+    i ← low - 1
+
+    FOR j ← low TO high - 1 DO
+        IF A[j] ≤ pivot THEN
+            i ← i + 1
+            SWAP A[i] WITH A[j]
+        END IF
+    END FOR
+
+    SWAP A[i + 1] WITH A[high]
+
+    RETURN i + 1
+
+END ALGORITHM
+
+
+ALGORITHM MEDIAN_OF_THREE(A, low, high)
+
+    mid ← (low + high) DIV 2
+
+    Compare A[low], A[mid], and A[high]
+    Return the index containing the median value
+
+END ALGORITHM
