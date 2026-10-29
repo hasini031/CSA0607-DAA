@@ -1,0 +1,88 @@
+
+# Q2: Sequential Search - Aircraft Tool Tracking
+
+def sequential_search(records, target):
+    comparisons = 0
+
+    for record in records:
+        comparisons += 1
+
+        if record["Tool ID"] == target:
+            return record, comparisons
+
+    return None, comparisons
+
+
+# Create sample tool records
+def create_records(n):
+    records = []
+
+    for i in range(n):
+        records.append({
+            "Tool ID": f"T-{i + 100:03d}",
+            "Technician ID": f"TECH-{i + 1:03d}",
+            "Issue Time": f"{9 + (i // 60):02d}:{i % 60:02d}",
+            "Work Bay": f"BAY-{(i % 5) + 1}"
+        })
+
+    return records
+
+
+# Experiment 1: Successful searches at different positions
+print("Q2: SEQUENTIAL SEARCH EXPERIMENT")
+print("=" * 60)
+
+records = create_records(10)
+
+successful_targets = {
+    "First position": "T-100",
+    "Middle position": "T-104",
+    "Last position": "T-109"
+}
+
+print("\n1. Successful searches")
+
+for position, target in successful_targets.items():
+    result, comparisons = sequential_search(records, target)
+
+    print(f"\n{position}: {target}")
+    print("Record found:", result)
+    print("Comparisons:", comparisons)
+
+
+# Experiment 2: Unsuccessful search
+print("\n\n2. Unsuccessful search")
+
+result, comparisons = sequential_search(records, "T-999")
+
+print("Target: T-999")
+print("Record found:", result)
+print("Comparisons:", comparisons)
+
+
+# Experiment 3: Different list sizes
+print("\n\n3. Different list sizes")
+
+sizes = [10, 100, 1000]
+
+for size in sizes:
+    records = create_records(size)
+
+    # Search for the last record: worst-case successful search
+    target = records[-1]["Tool ID"]
+    result, comparisons = sequential_search(records, target)
+
+    print(
+        f"List size: {size:4d} | "
+        f"Comparisons: {comparisons:4d} | "
+        f"Found: {result is not None}"
+    )
+
+
+print("\n4. Engineering analysis")
+print("Sequential search is suitable for small, changing lists")
+print("with infrequent searches and no need to maintain an index.")
+print("For large lists and frequent searches, consider a hash table")
+print("or another indexed lookup structure.")
+
+print("\nAll experiments completed.")
