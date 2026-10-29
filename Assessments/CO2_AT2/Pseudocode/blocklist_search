@@ -1,0 +1,41 @@
+# 2. Blocklist IP Search — Corrected and Optimized Pseudocode
+
+## A. Corrected Algorithm: Linear Search
+
+**Input:** Blocklist and IP address to check.
+
+**Output:** TRUE if the IP address is blocked; otherwise FALSE.
+
+```text
+ALGORITHM CORRECTED_IS_BLOCKED(blocklist, ip)
+
+    FOR each address IN blocklist
+        IF address = ip
+            RETURN TRUE
+        END IF
+    END FOR
+
+    RETURN FALSE
+
+END ALGORITHM
+```
+
+## B. Optimized Algorithm: Set Membership
+
+```text
+ALGORITHM OPTIMIZED_IS_BLOCKED(blocklist_set, ip)
+
+    IF ip EXISTS IN blocklist_set
+        RETURN TRUE
+    ELSE
+        RETURN FALSE
+    END IF
+
+END ALGORITHM
+```
+
+**Time Complexity:**
+- Corrected linear search: O(n) per query in the worst case.
+- Optimized set lookup: O(1) average per query, after building the set in O(n) time.
+
+**Purpose:** Identify whether an IP address appears in the security blocklist. The optimized implementation builds the set once and reuses it for multiple queries.
