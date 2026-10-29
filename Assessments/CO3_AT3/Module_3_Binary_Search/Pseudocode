@@ -1,1 +1,27 @@
+ALGORITHM BINARY_SEARCH_FIRST(A, target)
 
+    low ← 0
+    high ← length(A) - 1
+    result ← -1
+
+    WHILE low ≤ high DO
+
+        mid ← (low + high) DIV 2
+
+        IF A[mid] = target THEN
+            result ← mid
+            high ← mid - 1
+
+        ELSE IF A[mid] < target THEN
+            low ← mid + 1
+
+        ELSE
+            high ← mid - 1
+
+        END IF
+
+    END WHILE
+
+    RETURN result
+
+END ALGORITHM
