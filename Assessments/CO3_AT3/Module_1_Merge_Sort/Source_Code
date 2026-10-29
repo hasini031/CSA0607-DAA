@@ -1,1 +1,75 @@
 
+# CO3 Assessment - Module 1
+# Stable Merge Sort for Nightly Order Consolidation
+
+def merge_sort(orders):
+    if len(orders) <= 1:
+        return orders
+
+    mid = len(orders) // 2
+
+    left = merge_sort(orders[:mid])
+    right = merge_sort(orders[mid:])
+
+    return merge(left, right)
+
+
+def merge(left, right):
+    result = []
+    i = 0
+    j = 0
+
+    while i < len(left) and j < len(right):
+        # <= ensures stability for equal timestamps
+        if left[i][0] <= right[j][0]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+
+# Sample orders: (timestamp, order ID)
+orders = [
+    (105, "O1"),
+    (102, "O2"),
+    (105, "O3"),
+    (101, "O4"),
+    (102, "O5"),
+    (103, "O6")
+]
+
+print("Original Orders:")
+print(orders)
+
+sorted_orders = merge_sort(orders)
+
+print("\nSorted Orders:")
+print(sorted_orders)
+
+print("\nStability Verification:")
+for timestamp in sorted(set(order[0] for order in orders)):
+    original_ids = [
+        order[1] for order in orders
+        if order[0] == timestamp
+    ]
+    sorted_ids = [
+        order[1] for order in sorted_orders
+        if order[0] == timestamp
+    ]
+
+    print(f"Timestamp {timestamp}: "
+          f"Original = {original_ids}, "
+          f"Sorted = {sorted_ids}")
+
+print("\nVerification:",
+      "PASSED" if all(
+          sorted_orders[i][0] <= sorted_orders[i + 1][0]
+          for i in range(len(sorted_orders) - 1)
+      ) else "FAILED")
+
