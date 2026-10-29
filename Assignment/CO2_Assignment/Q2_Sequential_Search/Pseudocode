@@ -1,0 +1,28 @@
+
+ALGORITHM: Sequential Search
+
+INPUT:
+    List of tool records
+    Target Tool ID
+
+OUTPUT:
+    Matching record and number of comparisons
+
+1. Set comparisons = 0.
+
+2. FOR each record in the list:
+       Increment comparisons.
+
+       IF record.Tool_ID equals Target_Tool_ID:
+           Display the matching record.
+           Display comparisons.
+           RETURN the record and comparisons.
+       END IF
+   END FOR
+
+3. If the target is not found:
+       Display "Tool not found".
+       Display comparisons.
+       RETURN NOT_FOUND and comparisons.
+
+END ALGORITHM
