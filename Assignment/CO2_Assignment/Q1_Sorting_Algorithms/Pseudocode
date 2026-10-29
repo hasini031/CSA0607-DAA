@@ -1,0 +1,55 @@
+
+ALGORITHM: Compare Three Sorting Algorithms
+
+INPUT:
+    Three datasets:
+    1. Nearly sorted
+    2. Reverse sorted
+    3. Already sorted
+
+OUTPUT:
+    Sorted arrays, comparison counts, and swap/movement counts
+
+FOR each dataset:
+
+    SELECTION SORT:
+        Set comparisons = 0, swaps = 0
+        FOR each position i except the last:
+            Find the minimum element in the remaining array
+            Count each element comparison
+            If minimum is not at position i:
+                Swap the two elements
+                Increment swaps
+        END FOR
+
+    BUBBLE SORT:
+        Set comparisons = 0, swaps = 0
+        FOR each pass:
+            Set swapped = FALSE
+            Compare adjacent elements
+            If they are in the wrong order:
+                Swap them
+                Increment swaps
+                Set swapped = TRUE
+            If no swaps occurred:
+                Stop early
+        END FOR
+
+    INSERTION SORT:
+        Set comparisons = 0, movements = 0
+        FOR each element from the second position:
+            Store the current element as key
+            Compare key with elements on its left
+            Shift larger elements one position right
+            Insert key into its correct position
+            Count comparisons and movements
+        END FOR
+
+    Display the sorted array and operation counts
+    Record execution time for each algorithm
+
+END FOR
+
+Compare the results for all three datasets.
+Recommend a suitable algorithm for nearly sorted orders.
+END ALGORITHM
