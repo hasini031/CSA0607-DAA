@@ -1,0 +1,72 @@
+
+# Q3: Brute-Force String Matching
+
+def brute_force_match(text, pattern):
+    matches = []
+    comparisons = 0
+
+    n = len(text)
+    m = len(pattern)
+
+    if m == 0:
+        return list(range(n + 1)), comparisons
+
+    if m > n:
+        return matches, comparisons
+
+    for i in range(n - m + 1):
+        j = 0
+
+        while j < m:
+            comparisons += 1
+
+            if text[i + j] != pattern[j]:
+                break
+
+            j += 1
+
+        if j == m:
+            matches.append(i)
+
+    return matches, comparisons
+
+
+# Three deliberately designed test conditions
+tests = [
+    {
+        "name": "Test 1 - Quick Match",
+        "text": "HELLO WORLD",
+        "pattern": "WORLD",
+        "prediction": "The pattern occurs near the end; most earlier alignments fail quickly."
+    },
+    {
+        "name": "Test 2 - Repeated Characters",
+        "text": "AAAAAAAAAA",
+        "pattern": "AAAAB",
+        "prediction": "Repeated A characters cause several comparisons at each alignment before failure."
+    },
+    {
+        "name": "Test 3 - Pattern Absent",
+        "text": "COMPUTERSCIENCE",
+        "pattern": "XYZ",
+        "prediction": "The first character usually mismatches, so each alignment requires little work."
+    }
+]
+
+print("Q3: BRUTE-FORCE STRING MATCHING")
+print("=" * 65)
+
+for test in tests:
+    text = test["text"]
+    pattern = test["pattern"]
+
+    matches, comparisons = brute_force_match(text, pattern)
+
+    print(f"\n{test['name']}")
+    print("Text:", text)
+    print("Pattern:", pattern)
+    print("Prediction:", test["prediction"])
+    print("Match positions (0-based):", matches)
+    print("Character comparisons:", comparisons)
+
+print("\nAll experiments completed.")
