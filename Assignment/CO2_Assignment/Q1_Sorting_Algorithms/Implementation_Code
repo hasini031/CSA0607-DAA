@@ -1,0 +1,109 @@
+
+import time
+
+def selection_sort(arr):
+    a = arr.copy()
+    comparisons = swaps = 0
+
+    for i in range(len(a) - 1):
+        minimum = i
+
+        for j in range(i + 1, len(a)):
+            comparisons += 1
+            if a[j] < a[minimum]:
+                minimum = j
+
+        if minimum != i:
+            a[i], a[minimum] = a[minimum], a[i]
+            swaps += 1
+
+    return a, comparisons, swaps
+
+
+def bubble_sort(arr):
+    a = arr.copy()
+    comparisons = swaps = 0
+
+    for i in range(len(a) - 1):
+        swapped = False
+
+        for j in range(len(a) - i - 1):
+            comparisons += 1
+
+            if a[j] > a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+                swaps += 1
+                swapped = True
+
+        if not swapped:
+            break
+
+    return a, comparisons, swaps
+
+
+def insertion_sort(arr):
+    a = arr.copy()
+    comparisons = movements = 0
+
+    for i in range(1, len(a)):
+        key = a[i]
+        j = i - 1
+
+        while j >= 0:
+            comparisons += 1
+
+            if a[j] > key:
+                a[j + 1] = a[j]
+                movements += 1
+                j -= 1
+            else:
+                break
+
+        a[j + 1] = key
+        movements += 1
+
+    return a, comparisons, movements
+
+
+datasets = {
+    "Nearly Sorted": [1, 2, 4, 3, 5, 6],
+    "Reverse Sorted": [6, 5, 4, 3, 2, 1],
+    "Already Sorted": [1, 2, 3, 4, 5, 6]
+}
+
+algorithms = {
+    "Selection Sort": selection_sort,
+    "Bubble Sort": bubble_sort,
+    "Insertion Sort": insertion_sort
+}
+
+print("Q1: SORTING ALGORITHM COMPARISON")
+print("=" * 75)
+
+for dataset_name, data in datasets.items():
+    print(f"\nDataset: {dataset_name}")
+    print("Input:", data)
+
+    for name, algorithm in algorithms.items():
+        start = time.perf_counter()
+        sorted_data, comparisons, operations = algorithm(data)
+        elapsed = time.perf_counter() - start
+
+        assert sorted_data == sorted(data)
+
+        operation_name = (
+            "Movements" if name == "Insertion Sort" else "Swaps"
+        )
+
+        print(f"\n{name}")
+        print("Sorted output:", sorted_data)
+        print("Comparisons:", comparisons)
+        print(f"{operation_name}:", operations)
+        print(f"Execution time: {elapsed:.8f} seconds")
+
+print("\nAll tests passed: every dataset was sorted correctly.")
+print("\nConclusion:")
+print("Insertion Sort is suitable for nearly sorted data.")
+print("Bubble Sort with early stopping also handles sorted data well.")
+print("Selection Sort performs a fixed number of comparisons")
+print("regardless of the initial ordering.")
