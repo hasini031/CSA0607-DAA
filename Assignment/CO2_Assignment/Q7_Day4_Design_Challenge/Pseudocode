@@ -1,1 +1,48 @@
 
+ALGORITHM: Compare Brute-Force and Redesigned Closest Pair
+
+INPUT:
+    A list P of n two-dimensional points
+
+OUTPUT:
+    Closest pair, minimum distance, and operation counts
+
+PART A: ORIGINAL BRUTE-FORCE METHOD
+
+1. Examine every unique pair of points.
+2. Calculate the Euclidean distance for each pair.
+3. Retain the pair with the smallest distance.
+4. Count all pairs and distance calculations.
+
+PART B: REDESIGNED METHOD
+
+1. Sort the points by their x-coordinate.
+2. Set minimum_distance = infinity.
+3. Set closest_pair = NONE.
+4. Set distance_calculations = 0.
+
+5. FOR i = 0 TO n - 2:
+       FOR j = i + 1 TO n - 1:
+
+           Calculate horizontal_gap =
+               P[j].x - P[i].x
+
+           IF horizontal_gap >= minimum_distance:
+               BREAK the inner loop.
+           END IF
+
+           Calculate the Euclidean distance.
+           Increment distance_calculations.
+
+           IF distance < minimum_distance:
+               Update minimum_distance.
+               Update closest_pair.
+           END IF
+       END FOR
+   END FOR
+
+6. Display the closest pair and minimum distance.
+7. Display the number of distance calculations.
+
+END ALGORITHM
+
