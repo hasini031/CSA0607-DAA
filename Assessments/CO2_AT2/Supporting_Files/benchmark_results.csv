@@ -1,0 +1,4 @@
+Input_Size,Brute_Force_Seconds,Optimized_Seconds,Speedup
+1000,0.081096,0.001099,73.767
+4000,1.724687,0.009382,183.832
+8000,6.649072,0.010248,648.83
