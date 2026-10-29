@@ -1,1 +1,159 @@
 
+# Q7: Diagnose, Redesign and Validate Closest Pair
+
+import math
+import random
+import time
+
+
+def distance(a, b):
+    return math.hypot(a[0] - b[0], a[1] - b[1])
+
+
+# Original solution: examine every unique pair
+def brute_force_closest_pair(points):
+    n = len(points)
+
+    if n < 2:
+        raise ValueError("At least two points are required.")
+
+    best_pair = None
+    best_distance = float("inf")
+    calculations = 0
+
+    for i in range(n - 1):
+        for j in range(i + 1, n):
+            d = distance(points[i], points[j])
+            calculations += 1
+
+            if d < best_distance:
+                best_distance = d
+                best_pair = (points[i], points[j])
+
+    return best_pair, best_distance, calculations
+
+
+# Redesigned solution: sort and prune using horizontal distance
+def redesigned_closest_pair(points):
+    if len(points) < 2:
+        raise ValueError("At least two points are required.")
+
+    ordered = sorted(points, key=lambda p: p[0])
+
+    best_pair = None
+    best_distance = float("inf")
+    calculations = 0
+
+    for i in range(len(ordered) - 1):
+        for j in range(i + 1, len(ordered)):
+
+            horizontal_gap = ordered[j][0] - ordered[i][0]
+
+            # No later point can improve the current distance.
+            if horizontal_gap >= best_distance:
+                break
+
+            d = distance(ordered[i], ordered[j])
+            calculations += 1
+
+            if d < best_distance:
+                best_distance = d
+                best_pair = (ordered[i], ordered[j])
+
+    return best_pair, best_distance, calculations
+
+
+def run_comparison(points, label):
+    start = time.perf_counter()
+    original_pair, original_distance, original_count = (
+        brute_force_closest_pair(points)
+    )
+    original_time = time.perf_counter() - start
+
+    start = time.perf_counter()
+    new_pair, new_distance, new_count = (
+        redesigned_closest_pair(points)
+    )
+    redesigned_time = time.perf_counter() - start
+
+    # Check correctness by comparing minimum distances.
+    assert math.isclose(
+        original_distance, new_distance,
+        rel_tol=1e-9, abs_tol=1e-9
+    )
+
+    print(f"\n{label} — {len(points)} points")
+    print("-" * 60)
+    print("Original closest pair:", original_pair)
+    print(f"Original minimum distance: {original_distance:.6f}")
+    print("Original distance calculations:", original_count)
+    print(f"Original time: {original_time:.6f} seconds")
+
+    print("\nRedesigned closest pair:", new_pair)
+    print(f"Redesigned minimum distance: {new_distance:.6f}")
+    print("Redesigned distance calculations:", new_count)
+    print(f"Redesigned time: {redesigned_time:.6f} seconds")
+
+    if original_count > 0:
+        reduction = (
+            (original_count - new_count) / original_count
+        ) * 100
+    else:
+        reduction = 0
+
+    print(f"Distance calculation reduction: {reduction:.2f}%")
+    print("Validation: both methods found the same minimum distance.")
+
+    return original_count, new_count, original_time, redesigned_time
+
+
+print("Q7: CLOSEST-PAIR REDESIGN")
+print("=" * 65)
+
+# Test 1: Small example that can be checked manually
+small_points = [
+    (0, 0), (10, 10), (1, 1),
+    (20, 20), (2, 2), (30, 30)
+]
+
+run_comparison(small_points, "Small verification test")
+
+# Test 2: Larger reproducible datasets
+random.seed(42)
+
+print("\n\nSCALABILITY COMPARISON")
+print("=" * 65)
+print(f"{'N':<8}{'Original calcs':<18}"
+      f"{'Redesigned calcs':<20}"
+      f"{'Original sec':<16}{'Redesigned sec':<16}")
+
+for n in [100, 500, 1000, 2000]:
+    points = [
+        (random.uniform(0, 10000), random.uniform(0, 10000))
+        for _ in range(n)
+    ]
+
+    original_count, new_count, old_time, new_time = (
+        run_comparison_summary(points)
+    )
+
+    print(f"{n:<8}{original_count:<18}{new_count:<20}"
+          f"{old_time:<16.6f}{new_time:<16.6f}")
+
+
+def run_comparison_summary(points):
+    start = time.perf_counter()
+    old = brute_force_closest_pair(points)
+    old_time = time.perf_counter() - start
+
+    start = time.perf_counter()
+    new = redesigned_closest_pair(points)
+    new_time = time.perf_counter() - start
+
+    assert math.isclose(old[1], new[1], rel_tol=1e-9, abs_tol=1e-9)
+
+    return old[2], new[2], old_time, new_time
+
+
+print("\nAll redesigned results passed correctness checks.")
+
