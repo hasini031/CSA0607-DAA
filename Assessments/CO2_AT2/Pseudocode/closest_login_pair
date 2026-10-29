@@ -1,0 +1,82 @@
+# 4. Closest Login Pair — Corrected and Optimized Pseudocode
+
+## A. Corrected Algorithm: Brute-Force Closest Pair
+
+**Input:** List of login coordinates.
+
+**Output:** Indices of the closest pair and their Euclidean distance.
+
+```text
+ALGORITHM CORRECTED_CLOSEST_LOGINS(events)
+
+    IF LENGTH(events) < 2
+        RETURN no pair
+    END IF
+
+    minimum_distance ← INFINITY
+    closest_pair ← none
+
+    FOR i ← 0 TO LENGTH(events) - 2
+        FOR j ← i + 1 TO LENGTH(events) - 1
+
+            distance ← EUCLIDEAN_DISTANCE(events[i], events[j])
+
+            IF distance < minimum_distance
+                minimum_distance ← distance
+                closest_pair ← (i, j)
+            END IF
+
+        END FOR
+    END FOR
+
+    RETURN closest_pair, minimum_distance
+
+END ALGORITHM
+```
+
+## B. Optimized Algorithm: Sorting and Pruning
+
+```text
+ALGORITHM OPTIMIZED_CLOSEST_LOGINS(events)
+
+    IF LENGTH(events) < 2
+        RETURN no pair
+    END IF
+
+    SORT points by x-coordinate
+    RETAIN each point's original index
+
+    best_squared ← INFINITY
+    closest_pair ← none
+
+    FOR i ← 0 TO LENGTH(points) - 2
+
+        FOR j ← i + 1 TO LENGTH(points) - 1
+
+            dx ← points[j].x - points[i].x
+
+            IF dx * dx >= best_squared
+                BREAK
+            END IF
+
+            dy ← points[j].y - points[i].y
+            distance_squared ← dx * dx + dy * dy
+
+            IF distance_squared < best_squared
+                best_squared ← distance_squared
+                closest_pair ← original indices of points i and j
+            END IF
+
+        END FOR
+    END FOR
+
+    RETURN closest_pair, SQRT(best_squared)
+
+END ALGORITHM
+```
+
+**Time Complexity:**
+- Corrected brute-force algorithm: O(n²).
+- Optimized sorting and pruning: O(n log n) for sorting, but the complete algorithm still has O(n²) worst-case time complexity.
+
+**Purpose:** Identify the two login events with the smallest Euclidean distance. Sorting and pruning can reduce comparisons on many inputs, while preserving the original indices of the events.
