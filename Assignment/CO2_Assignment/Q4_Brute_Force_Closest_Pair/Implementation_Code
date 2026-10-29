@@ -1,1 +1,88 @@
 
+# Q4: Brute-Force Closest Pair
+
+import math
+import random
+import time
+
+
+def closest_pair(points):
+    n = len(points)
+
+    if n < 2:
+        raise ValueError("At least two points are required.")
+
+    minimum_distance = float("inf")
+    pair = None
+    pairs_examined = 0
+    distance_calculations = 0
+
+    for i in range(n - 1):
+        for j in range(i + 1, n):
+            pairs_examined += 1
+
+            x1, y1 = points[i]
+            x2, y2 = points[j]
+
+            distance = math.sqrt(
+                (x1 - x2) ** 2 + (y1 - y2) ** 2
+            )
+            distance_calculations += 1
+
+            if distance < minimum_distance:
+                minimum_distance = distance
+                pair = (points[i], points[j])
+
+    return pair, minimum_distance, pairs_examined, distance_calculations
+
+
+print("Q4: BRUTE-FORCE CLOSEST PAIR")
+print("=" * 65)
+
+# Experiment 1: Three deliberately different point sets
+test_sets = {
+    "Small triangle": [(0, 0), (3, 4), (1, 1)],
+    "Square corners": [(0, 0), (0, 4), (4, 0), (4, 4)],
+    "Close points": [(1, 1), (1.5, 1.5), (5, 5), (10, 10)]
+}
+
+for name, points in test_sets.items():
+    pair, distance, pairs, calculations = closest_pair(points)
+
+    print(f"\n{name}")
+    print("Points:", points)
+    print("Closest pair:", pair)
+    print(f"Minimum distance: {distance:.4f}")
+    print("Pairs examined:", pairs)
+    print("Distance calculations:", calculations)
+
+
+# Experiment 2: Increasing input sizes
+print("\n\nSCALABILITY EXPERIMENT")
+print("-" * 65)
+print(f"{'Points':<12}{'Expected pairs':<18}"
+      f"{'Examined':<15}{'Time (seconds)':<18}")
+
+random.seed(42)
+
+for n in [100, 500, 1000, 2000]:
+    points = [
+        (random.uniform(0, 10000), random.uniform(0, 10000))
+        for _ in range(n)
+    ]
+
+    start = time.perf_counter()
+    pair, distance, pairs, calculations = closest_pair(points)
+    elapsed = time.perf_counter() - start
+
+    expected_pairs = n * (n - 1) // 2
+
+    assert pairs == expected_pairs
+    assert calculations == expected_pairs
+
+    print(f"{n:<12}{expected_pairs:<18}"
+          f"{pairs:<15}{elapsed:<18.6f}")
+
+print("\nValidation successful.")
+print("Each unique pair is examined exactly once.")
+
