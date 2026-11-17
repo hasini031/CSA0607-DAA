@@ -1,0 +1,35 @@
+# Joint Final Design
+
+## Problem Statement
+Design a decision-based system that selects either Merge Sort or Quick Sort based on the requirements of the input data.
+
+## Final Approach
+After comparing both initial designs, we developed a combined decision-making approach.
+
+The system considers the following factors:
+
+1. Whether stable sorting is required.
+2. Whether guaranteed O(n log n) performance is required.
+3. Whether extra memory is available.
+4. Whether in-place sorting is preferred.
+
+## Final Decision Rules
+
+- If stable sorting is required, choose Merge Sort.
+- If guaranteed O(n log n) performance is required, choose Merge Sort.
+- If memory usage should be minimized and in-place sorting is preferred, choose Quick Sort.
+- Otherwise, choose Quick Sort.
+
+## Comparison
+
+| Feature | Merge Sort | Quick Sort |
+|---|---|---|
+| Best-case time | O(n log n) | O(n log n) |
+| Average-case time | O(n log n) | O(n log n) |
+| Worst-case time | O(n log n) | O(n²) |
+| Stable | Yes | No |
+| Extra space | O(n) | O(log n) average recursion space |
+| In-place | No | Yes, in the usual implementation |
+
+## Conclusion
+The final design combines both students' ideas. It selects Merge Sort when stability or guaranteed performance is important and Quick Sort when in-place sorting and lower extra memory usage are preferred.
