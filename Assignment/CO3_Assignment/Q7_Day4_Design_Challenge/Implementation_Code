@@ -1,1 +1,63 @@
 
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+    left = [x for x in arr[:-1] if x <= pivot]
+    right = [x for x in arr[:-1] if x > pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+def adaptive_sort(arr, stable=False, guaranteed=False,
+                  minimize_memory=False):
+
+    if stable or guaranteed:
+        algorithm = "Merge Sort"
+        result = merge_sort(arr)
+    else:
+        algorithm = "Quick Sort"
+        result = quick_sort(arr)
+
+    return algorithm, result
+
+
+data = [8, 3, 6, 2, 9, 1, 5]
+
+algorithm, result = adaptive_sort(data, stable=True)
+print("Selected Algorithm:", algorithm)
+print("Sorted Array:", result)
+
+algorithm, result = adaptive_sort(data, guaranteed=True)
+print("\nSelected Algorithm:", algorithm)
+print("Sorted Array:", result)
+
+algorithm, result = adaptive_sort(data, minimize_memory=True)
+print("\nSelected Algorithm:", algorithm)
+print("Sorted Array:", result)
+
