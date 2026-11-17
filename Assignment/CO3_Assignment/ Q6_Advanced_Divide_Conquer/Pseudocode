@@ -19,3 +19,25 @@
 **Time Complexity:** O(n)
 
 **Space Complexity:** O(n)
+**Aim:** To find a subset whose sum equals the target using the Meet-in-the-Middle technique.
+
+**Pseudocode:**
+
+1. Start.
+2. Read array A and target sum T.
+3. Divide the array into two halves.
+4. Generate all possible subset sums of the first half.
+5. Generate all possible subset sums of the second half.
+6. Sort both lists of subset sums.
+7. Initialize one pointer at the beginning of the first list.
+8. Initialize another pointer at the end of the second list.
+9. Calculate the sum of the two selected subset sums.
+10. If the sum equals T, return the combined subset.
+11. If the sum is smaller than T, move the first pointer forward.
+12. Otherwise, move the second pointer backward.
+13. Display the matching subset or report no subset found.
+14. Stop.
+
+**Time Complexity:** O(n × 2^(n/2))
+
+**Space Complexity:** O(n × 2^(n/2)) for the given implementation.
