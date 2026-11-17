@@ -1,1 +1,17 @@
+**KARATSUBA MULTIPLICATION**
 
+1. Start.
+2. Read two numbers X and Y.
+3. If both numbers contain only one digit, multiply them directly.
+4. Find the maximum number of digits and divide it into two halves.
+5. Divide X into XH and XL.
+6. Divide Y into YH and YL.
+7. Calculate:
+   - P = Karatsuba(XH, YH)
+   - Q = Karatsuba(XL, YL)
+   - R = Karatsuba(XH + XL, YH + YL)
+8. Calculate the middle term: R - P - Q.
+9. Combine the results:
+   Result = P × 10^(2m) + (R - P - Q) × 10^m + Q
+10. Return Result.
+11. Stop.
