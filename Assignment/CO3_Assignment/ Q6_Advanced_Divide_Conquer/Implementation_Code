@@ -1,13 +1,15 @@
 
+# Median of Medians Algorithm
+# Aim: Find the Kth smallest element in an array.
+
 def median_of_medians(arr, k):
     if len(arr) <= 5:
         return sorted(arr)[k - 1]
 
-    groups = [arr[i:i + 5] for i in range(0, len(arr), 5)]
+    groups = [arr[i:i+5] for i in range(0, len(arr), 5)]
+    medians = [sorted(g)[len(g)//2] for g in groups]
 
-    medians = [sorted(group)[len(group) // 2] for group in groups]
-
-    pivot = median_of_medians(medians, (len(medians) + 1) // 2)
+    pivot = median_of_medians(medians, (len(medians)+1)//2)
 
     smaller = [x for x in arr if x < pivot]
     equal = [x for x in arr if x == pivot]
@@ -15,10 +17,8 @@ def median_of_medians(arr, k):
 
     if k <= len(smaller):
         return median_of_medians(smaller, k)
-
     elif k <= len(smaller) + len(equal):
         return pivot
-
     else:
         return median_of_medians(
             greater, k - len(smaller) - len(equal)
@@ -32,3 +32,57 @@ print("Original Array:", arr)
 print("K Value:", k)
 print("Kth Smallest Element:", median_of_medians(arr, k))
 
+
+# Meet-in-the-Middle Algorithm
+# Aim: Find a subset whose sum equals the target.
+
+def generate_subsets(arr):
+    subsets = []
+
+    for mask in range(1 << len(arr)):
+        subset = []
+
+        for i in range(len(arr)):
+            if mask & (1 << i):
+                subset.append(arr[i])
+
+        subsets.append((sum(subset), subset))
+
+    return sorted(subsets)
+
+
+def meet_in_middle(arr, target):
+    mid = len(arr) // 2
+
+    left = generate_subsets(arr[:mid])
+    right = generate_subsets(arr[mid:])
+
+    i = 0
+    j = len(right) - 1
+
+    while i < len(left) and j >= 0:
+        total = left[i][0] + right[j][0]
+
+        if total == target:
+            return left[i][1] + right[j][1]
+        elif total < target:
+            i += 1
+        else:
+            j -= 1
+
+    return None
+
+
+arr = [3, 34, 4, 12, 5, 2]
+target = 9
+
+result = meet_in_middle(arr, target)
+
+print("Given Array:", arr)
+print("Target Sum:", target)
+
+if result is not None:
+    print("Subset Found:", result)
+    print("Subset Sum:", sum(result))
+else:
+    print("No Subset Found")
