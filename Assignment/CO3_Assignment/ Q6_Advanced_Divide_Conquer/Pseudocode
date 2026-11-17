@@ -1,15 +1,21 @@
-**MEDIAN OF MEDIANS ALGORITHM**
+**Aim:** To find the Kth smallest element using the Median of Medians algorithm.
+
+**Pseudocode:**
 
 1. Start.
-2. Read an array and the value K.
-3. Divide the array into groups of five elements.
-4. Sort each group.
-5. Find the median of each group.
-6. Find the median of these medians.
-7. Use this median as the pivot.
-8. Divide the array into elements smaller than, equal to, and greater than the pivot.
-9. If the pivot position is K, return the pivot.
-10. If K is smaller, repeat the process on the left part.
-11. Otherwise, repeat on the right part with the adjusted K.
+2. Read array A and K.
+3. If the array contains at most five elements, sort it and return the Kth element.
+4. Divide the array into groups of five elements.
+5. Sort each group and find its median.
+6. Find the median of all group medians.
+7. Select the median as the pivot.
+8. Divide the array into smaller, equal, and greater elements.
+9. If K is in the smaller part, recursively search the smaller part.
+10. If K is in the equal part, return the pivot.
+11. Otherwise, search the greater part with adjusted K.
 12. Display the Kth smallest element.
 13. Stop.
+
+**Time Complexity:** O(n)
+
+**Space Complexity:** O(n)
