@@ -1,1 +1,24 @@
+**STRASSEN MATRIX MULTIPLICATION**
 
+1. Start.
+2. Read two square matrices A and B.
+3. If the matrix size is 1, multiply the elements directly.
+4. Divide both matrices into four equal submatrices:
+   - A11, A12, A21, A22
+   - B11, B12, B21, B22
+5. Calculate the seven products:
+   - M1 = (A11 + A22) × (B11 + B22)
+   - M2 = (A21 + A22) × B11
+   - M3 = A11 × (B12 - B22)
+   - M4 = A22 × (B21 - B11)
+   - M5 = (A11 + A12) × B22
+   - M6 = (A21 - A11) × (B11 + B12)
+   - M7 = (A12 - A22) × (B21 + B22)
+6. Calculate the four result submatrices:
+   - C11 = M1 + M4 - M5 + M7
+   - C12 = M3 + M5
+   - C21 = M2 + M4
+   - C22 = M1 - M2 + M3 + M6
+7. Combine the four submatrices into the result matrix C.
+8. Display matrix C.
+9. Stop.
