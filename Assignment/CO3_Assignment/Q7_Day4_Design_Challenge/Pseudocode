@@ -1,1 +1,37 @@
+# Adaptive Sorting – Pseudocode
 
+**Aim:** To select Merge Sort or Quick Sort based on the input requirements.
+
+**Pseudocode:**
+
+```text
+ADAPTIVE_SORT(A, stable, guaranteed, minimize_memory)
+
+1. If stable = TRUE:
+       algorithm = MERGE SORT
+
+2. Else if guaranteed = TRUE:
+       algorithm = MERGE SORT
+
+3. Else if minimize_memory = TRUE:
+       algorithm = QUICK SORT
+
+4. Else:
+       algorithm = QUICK SORT
+
+5. If algorithm = MERGE SORT:
+       result = MERGE_SORT(A)
+
+6. Else:
+       result = QUICK_SORT(A)
+
+7. Return result and algorithm
+```
+
+**Decision:**
+- Merge Sort is selected when stability or guaranteed performance is required.
+- Quick Sort is selected when in-place sorting and lower extra memory usage are preferred.
+
+**Complexity:**
+- Merge Sort: O(n log n) time and O(n) extra space.
+- Quick Sort: O(n log n) average time, O(n²) worst-case time and O(log n) average recursion space.
