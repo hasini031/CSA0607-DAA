@@ -1,1 +1,31 @@
 
+def karatsuba(x, y):
+    if x < 10 or y < 10:
+        return x * y
+
+    n = max(len(str(x)), len(str(y)))
+    m = n // 2
+
+    power = 10 ** m
+
+    high1 = x // power
+    low1 = x % power
+
+    high2 = y // power
+    low2 = y % power
+
+    p = karatsuba(high1, high2)
+    q = karatsuba(low1, low2)
+    r = karatsuba(high1 + low1, high2 + low2)
+
+    return p * (10 ** (2 * m)) + (r - p - q) * power + q
+
+
+num1 = 1234
+num2 = 5678
+
+result = karatsuba(num1, num2)
+
+print("First Number:", num1)
+print("Second Number:", num2)
+print("Product:", result)
