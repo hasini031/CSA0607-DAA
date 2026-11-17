@@ -1,1 +1,27 @@
 
+MERGE_SORT(A, low, high)
+
+1. If low < high:
+       mid = (low + high) // 2
+
+2. MERGE_SORT(A, low, mid)
+
+3. MERGE_SORT(A, mid + 1, high)
+
+4. MERGE(A, low, mid, high)
+
+
+MERGE(A, low, mid, high)
+
+1. Create temporary arrays for left and right halves.
+
+2. Compare elements from both halves.
+
+3. Copy the smaller element into the temporary array.
+
+4. Copy the remaining elements.
+
+5. Copy the sorted elements back into A.
+
+6. End
+
