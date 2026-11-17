@@ -1,1 +1,15 @@
+**CLOSEST PAIR OF POINTS**
 
+1. Start.
+2. Read the given set of points.
+3. Sort the points based on their X-coordinates.
+4. If the number of points is 2 or 3, calculate all pairwise distances and return the minimum distance.
+5. Divide the points into two halves.
+6. Recursively find the closest pair in the left half.
+7. Recursively find the closest pair in the right half.
+8. Find the minimum distance from both halves.
+9. Create a strip containing points whose X-coordinate is within the minimum distance from the middle line.
+10. Sort the strip by Y-coordinates.
+11. Compare nearby points in the strip and update the minimum distance.
+12. Return the closest pair and minimum distance.
+13. Stop.
