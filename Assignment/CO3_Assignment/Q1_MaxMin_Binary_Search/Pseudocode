@@ -1,1 +1,54 @@
+# Q1 – PSEUDOCODE
 
+## 1. Maximum and Minimum Using Divide and Conquer
+
+**Pseudocode:**
+
+```text
+MAXMIN(A, low, high)
+
+1. If low == high:
+       Return A[low], A[low]
+
+2. If high == low + 1:
+       If A[low] > A[high]:
+           Return A[low], A[high]
+       Else:
+           Return A[high], A[low]
+
+3. mid = (low + high) / 2
+
+4. (max1, min1) = MAXMIN(A, low, mid)
+
+5. (max2, min2) = MAXMIN(A, mid + 1, high)
+
+6. Maximum = max(max1, max2)
+
+7. Minimum = min(min1, min2)
+
+8. Return Maximum, Minimum
+```
+
+## 2. Binary Search Using Divide and Conquer
+
+**Pseudocode:**
+
+```text
+BINARY_SEARCH(A, low, high, key)
+
+1. If low > high:
+       Return -1
+
+2. mid = (low + high) / 2
+
+3. If A[mid] == key:
+       Return mid
+
+4. If key < A[mid]:
+       Return BINARY_SEARCH(A, low, mid - 1, key)
+
+5. Else:
+       Return BINARY_SEARCH(A, mid + 1, high, key)
+
+6. End
+```
