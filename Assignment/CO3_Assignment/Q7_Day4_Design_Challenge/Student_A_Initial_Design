@@ -1,0 +1,20 @@
+# Student A – Initial Design
+
+## Problem
+Design a method to choose between Merge Sort and Quick Sort based on the requirements of the input data.
+
+## Proposed Approach
+My approach is to select the sorting algorithm based on stability, memory usage, and worst-case performance.
+
+1. If stable sorting is required, choose Merge Sort.
+2. If guaranteed O(n log n) time is required, choose Merge Sort.
+3. If extra memory should be minimized, choose Quick Sort.
+4. Otherwise, choose Quick Sort for its good average-case performance.
+
+## Reason
+Merge Sort provides stable sorting and guaranteed O(n log n) time, but it requires extra memory.
+
+Quick Sort is generally fast in practice and can sort in-place, but its worst-case time is O(n²).
+
+## Conclusion
+The algorithm should be selected according to the user's requirements rather than choosing one sorting method for every situation.
