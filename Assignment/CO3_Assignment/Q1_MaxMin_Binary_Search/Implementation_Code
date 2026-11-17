@@ -1,1 +1,70 @@
+# Q1 – IMPLEMENTATION CODE
 
+## 1. Maximum and Minimum Using Divide and Conquer
+
+**Python Program:**
+
+```python
+def max_min(arr, low, high):
+    if low == high:
+        return arr[low], arr[low]
+
+    if high == low + 1:
+        if arr[low] > arr[high]:
+            return arr[low], arr[high]
+        else:
+            return arr[high], arr[low]
+
+    mid = (low + high) // 2
+
+    max1, min1 = max_min(arr, low, mid)
+    max2, min2 = max_min(arr, mid + 1, high)
+
+    maximum = max(max1, max2)
+    minimum = min(min1, min2)
+
+    return maximum, minimum
+
+
+n = int(input("Enter number of elements: "))
+arr = list(map(int, input("Enter elements: ").split()))
+
+maximum, minimum = max_min(arr, 0, n - 1)
+
+print("Maximum element:", maximum)
+print("Minimum element:", minimum)
+```
+
+## 2. Binary Search Using Divide and Conquer
+
+**Python Program:**
+
+```python
+def binary_search(arr, low, high, key):
+    if low > high:
+        return -1
+
+    mid = (low + high) // 2
+
+    if arr[mid] == key:
+        return mid
+
+    elif key < arr[mid]:
+        return binary_search(arr, low, mid - 1, key)
+
+    else:
+        return binary_search(arr, mid + 1, high, key)
+
+
+n = int(input("Enter number of elements: "))
+arr = list(map(int, input("Enter sorted elements: ").split()))
+
+key = int(input("Enter element to search: "))
+
+result = binary_search(arr, 0, n - 1, key)
+
+if result == -1:
+    print("Element not found")
+else:
+    print("Element found at position:", result + 1)
+```
