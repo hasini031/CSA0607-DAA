@@ -1,0 +1,20 @@
+# Student B – Initial Design
+
+## Problem
+Develop a decision-making method to select a suitable sorting algorithm for different input conditions.
+
+## Proposed Approach
+My approach is to consider the input size, memory availability, and expected performance.
+
+1. For small datasets, Quick Sort can be selected for its practical speed.
+2. When stable sorting is needed, select Merge Sort.
+3. When extra memory is available and predictable performance is important, select Merge Sort.
+4. When in-place sorting is preferred, select Quick Sort.
+
+## Reason
+The performance of Quick Sort depends on pivot selection. Poor pivot selection can lead to O(n²) time.
+
+Merge Sort divides the input into equal parts and provides O(n log n) time in all cases.
+
+## Conclusion
+The choice of sorting algorithm should depend on the dataset and the performance requirements.
