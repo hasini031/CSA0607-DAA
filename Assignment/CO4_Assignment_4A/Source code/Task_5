@@ -1,1 +1,50 @@
 
+def floyd_warshall(vertices, edges):
+    n = len(vertices)
+    index = {v: i for i, v in enumerate(vertices)}
+
+    # Initialize distance matrix
+    dist = [[float('inf')] * n for _ in range(n)]
+
+    for i in range(n):
+        dist[i][i] = 0
+
+    for u, v, weight in edges:
+        dist[index[u]][index[v]] = weight
+
+    # Floyd-Warshall algorithm
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] != float('inf') and dist[k][j] != float('inf'):
+                    new_distance = dist[i][k] + dist[k][j]
+
+                    if new_distance < dist[i][j]:
+                        dist[i][j] = new_distance
+
+    # Display distance matrix
+    print("Shortest Distance Matrix:")
+    for row in dist:
+        for value in row:
+            if value == float('inf'):
+                print("INF", end=" ")
+            else:
+                print(value, end=" ")
+        print()
+
+
+# Main program
+vertices = ['A', 'B', 'C', 'D', 'E']
+
+edges = [
+    ('A', 'B', 4),
+    ('A', 'C', 7),
+    ('B', 'C', 2),
+    ('B', 'D', 6),
+    ('C', 'D', 1),
+    ('D', 'E', 3),
+    ('C', 'E', 8)
+]
+
+floyd_warshall(vertices, edges)
+
