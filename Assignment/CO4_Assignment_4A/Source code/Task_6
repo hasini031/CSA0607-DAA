@@ -1,1 +1,64 @@
 
+def energy_aware_scheduling(jobs):
+    jobs = sorted(jobs, key=lambda x: x[2])
+    n = len(jobs)
+
+    # Find the last compatible job
+    prev = []
+    for i in range(n):
+        last = -1
+        for j in range(i - 1, -1, -1):
+            if jobs[j][2] <= jobs[i][1]:
+                last = j
+                break
+        prev.append(last)
+
+    # Initialize DP table
+    dp = [0] * (n + 1)
+
+    # Calculate maximum energy saving
+    for i in range(1, n + 1):
+        include = jobs[i - 1][3] + dp[prev[i - 1] + 1]
+        exclude = dp[i - 1]
+        dp[i] = max(include, exclude)
+
+    # Reconstruct selected jobs
+    selected = []
+    i = n
+
+    while i > 0:
+        include = jobs[i - 1][3] + dp[prev[i - 1] + 1]
+
+        if include > dp[i - 1]:
+            selected.append(jobs[i - 1])
+            i = prev[i - 1] + 1
+        else:
+            i -= 1
+
+    selected.reverse()
+
+    return selected, dp[n]
+
+
+# Main program
+jobs = [
+    ("J1", 1, 3, 20),
+    ("J2", 2, 5, 50),
+    ("J3", 4, 6, 30),
+    ("J4", 6, 8, 40),
+    ("J5", 5, 9, 60),
+    ("J6", 8, 10, 30),
+    ("J7", 9, 11, 50),
+    ("J8", 11, 13, 40)
+]
+
+selected_jobs, total_value = energy_aware_scheduling(jobs)
+
+print("Selected Jobs:")
+for job in selected_jobs:
+    print(job[0], "Start:", job[1],
+          "Finish:", job[2],
+          "Energy Saving:", job[3])
+
+print("Maximum Total Energy Saving:", total_value)
+
