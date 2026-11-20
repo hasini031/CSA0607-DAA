@@ -1,1 +1,38 @@
 
+def job_sequencing(jobs):
+    # Sort jobs in descending order of profit
+    jobs = sorted(jobs, key=lambda x: x[2], reverse=True)
+
+    max_deadline = max(job[1] for job in jobs)
+    slots = [None] * max_deadline
+    total_profit = 0
+
+    # Place each job in the latest available slot
+    for job in jobs:
+        job_id, deadline, profit = job
+
+        for slot in range(min(deadline, max_deadline) - 1, -1, -1):
+            if slots[slot] is None:
+                slots[slot] = job_id
+                total_profit += profit
+                break
+
+    print("Job Schedule:")
+    for i in range(len(slots)):
+        if slots[i] is not None:
+            print("Slot", i + 1, ":", slots[i])
+
+    print("Total Profit:", total_profit)
+
+
+# Main program
+jobs = [
+    ("A", 2, 80),
+    ("B", 1, 35),
+    ("C", 2, 60),
+    ("D", 3, 40),
+    ("E", 1, 25)
+]
+
+job_sequencing(jobs)
+
